@@ -179,3 +179,51 @@ CREATE TABLE
         reason_deleted varchar(255),
         FOREIGN KEY (imageable_id) REFERENCES profiles (id)
     );
+
+CREATE TABLE
+    IF NOT EXISTS videos (
+        id bigint unsigned PRIMARY KEY AUTO_INCREMENT,
+        videoble_type varchar(255),
+        videoble_id bigint unsigned,
+        sha256 char(64),
+        width smallint unsigned,
+        height smallint unsigned,
+        duration decimal(9, 3) unsigned,
+        size bigint unsigned,
+        mime varchar(255),
+        origin_name varchar(255),
+        extention varchar(255),
+        sfw_score decimal(2, 1) unsigned,
+        created_at TIMESTAMP,
+        updated_at TIMESTAMP,
+        deleted_at TIMESTAMP,
+        reason_deleted varchar(255),
+        FOREIGN KEY (videoble_id) REFERENCES posts (id)
+    );
+
+CREATE TABLE
+    IF NOT EXISTS comments (
+        id bigint unsigned PRIMARY KEY AUTO_INCREMENT,
+        uuid62 varchar(255),
+        commentor_id bigint unsigned,
+        post_id bigint unsigned,
+        commentable_type varchar(255),
+        videoble_id bigint unsigned,
+        body text,
+        created_at TIMESTAMP,
+        updated_at TIMESTAMP,
+        deleted_at TIMESTAMP,
+        reason_deleted TIMESTAMP,
+        FOREIGN KEY (videoble_id) REFERENCES posts (id)
+    );
+
+CREATE TABLE
+    IF NOT EXISTS profiles_followers (
+        id bigint unsigned PRIMARY KEY AUTO_INCREMENT,
+        profile_id bigint unsigned,
+        follower_id bigint unsigned,
+        deleted_at TIMESTAMP,
+        reason_deleted varchar(255),
+        FOREIGN KEY (profile_id) REFERENCES profiles (id),
+        FOREIGN KEY (follower_id) REFERENCES profiles (id)
+    );
